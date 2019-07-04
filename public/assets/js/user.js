@@ -16,8 +16,12 @@ $('#userForm').on('submit', function () {
     return false;
 });
 
-//上传头像事件
-$('#avatar').on('change', function () {
+// //上传头像事件
+// $('#avatar').on('change', function () {
+
+// });
+
+$('#modifyBox').on('change', '#avatar', function () {
     var formData = new FormData();
     formData.append('avatar', this.files[0]);
     //console.log(this.files[0] );
@@ -53,4 +57,41 @@ $.ajax({
         //将插入好数据的模板插入到页面中
         $('#usersBody').html(html);
     }
-})
+});
+
+//点击编辑用户数据事件
+$('#usersBody').on('click', '#edit', function () {
+    //获取点击用户的id值
+    var id = $(this).attr('data-id');
+    $.ajax({
+        type: 'get',
+        url: '/users/' + id,
+        //data: id,
+        success: function (response) {
+            //console.log(response);
+            var html = template('modifyTpl', response);
+            //console.log(html);
+            $('#modifyBox').html(html);
+        }
+    })
+});
+
+//修改用户信息事件
+$('#modifyBox').on('submit', '#modifyForm', function () {
+    //获取用户在表单中输入的内容
+    var formData = $(this).serialize();
+    //获取用户点击的用户id
+    var id = $(this).attr('data-id');
+    //console.log(formData);
+    //发送请求 服务端修改数据重新渲染页面
+    $.ajax({
+        type: 'put',
+        url: '/users/' + id,
+        data: formData,
+        success: function (response) {
+            //console.log(response);
+            location.reload();
+        }
+    })
+    return false;
+});
