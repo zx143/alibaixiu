@@ -95,3 +95,80 @@ $('#modifyBox').on('submit', '#modifyForm', function () {
     })
     return false;
 });
+
+//删除用户功能 
+//监听点击事件
+$('#usersBody').on('click', '.delete', function () {
+    //弹出选择警示框
+    if (confirm('您真的要删除此用户吗?')) {
+        //获取即将删除的用户Id
+        var id = $(this).attr('data-id');
+        //发送请求
+        $.ajax({
+            type: 'delete',
+            url: '/users/' + id,
+            success: function (response) {
+                location.reload();
+                console.log(response);
+            }
+        })
+    }
+});
+
+//全选按钮影响子按钮
+var selectAll = $('#selectAll');
+var deleteMany = $('#deleteMany');
+selectAll.on('change', function () {
+    //获取到全选按钮当前状态
+    var status = $(this).prop('checked');
+    //根据全选按钮的状态来显示隐藏批量删除按钮
+    if (status) {
+        //显示
+        deleteMany.show();
+    } else {
+        //隐藏
+        deleteMany.hide();
+    }
+    //获取所有用户的按钮 将全选按钮的状态赋值给子按钮
+    $('#usersBody').find('input').prop('checked', status);
+});
+
+//监听全选框的状态
+$('#usersBody').on('change', '.userStatus', function () {
+    //获取所有用户的复选框
+    var inputs = $('#usersBody').find('input');
+    //判断选中的复选框数量和所有用户的复选框数量是否一致
+    if (inputs.length == inputs.filter(':checked').length) {
+        selectAll.prop('checked', true);
+    } else {
+        selectAll.prop('checked', false);
+    };
+    //如果选中的复选框数量大于0
+    if (inputs.filter(':checked').length > 0) {
+        deleteMany.show();
+    } else {
+        deleteMany.hide();
+    }
+});
+
+//批量删除点击事件
+deleteMany.on('click', function () {
+    var ids = [];
+    //获取复选框选中的用户
+    var checkedUser = $('#usersBody').find('input').filter(':checked');
+    //循环复选框,从复选框元素上获取data-id
+    checkedUser.each(function (index, item) {
+        ids.push($(item).attr('data-id'));
+    });
+    // console.log(ids);
+    // return false;
+    if (confirm('您真的要批量删除用户吗?')) {
+        $.ajax({
+            type: 'delete',
+            url: '/users/' + ids.join('-'),
+            success: function () {
+                location.reload();
+            }
+        });
+    };
+});
