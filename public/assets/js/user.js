@@ -64,7 +64,7 @@ $('#usersBody').on('click', '#edit', function () {
     //获取点击用户的id值
     var id = $(this).attr('data-id');
     $.ajax({
-        type: 'get',
+        type: 'put',
         url: '/users/' + id,
         //data: id,
         success: function (response) {
