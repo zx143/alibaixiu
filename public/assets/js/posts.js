@@ -11,11 +11,7 @@ $.ajax({
     }
 });
 
-//处理日期格式
-template.defaults.imports.dateFormat = function (date) {
-    var data = new Date(date);
-    return data.getFullYear() + '-' + (data.getMonth() + 1) + '-' + data.getDate();
-};
+
 
 //分页功能
 function changePage(page) {
