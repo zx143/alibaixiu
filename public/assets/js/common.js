@@ -22,3 +22,14 @@ template.defaults.imports.dateFormat = function (date) {
   var data = new Date(date);
   return data.getFullYear() + '-' + (data.getMonth() + 1) + '-' + data.getDate();
 };
+
+//发送请求 获取用户的账号信息
+$.ajax({
+  type: 'get',
+  url: '/users/' + userId,
+  success: function (res) {
+    //console.log(res);
+    $('.avatar').attr('src', res.avatar);
+    $('.name').text(res.nickName);
+  }
+})

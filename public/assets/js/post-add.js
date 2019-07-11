@@ -12,7 +12,7 @@ $.ajax({
 });
 
 //选择文件上传
-$('#feature').on('change', function () {
+$('#modifyBox').on('change', '#feature', function () {
     //获取用户选择到的文件
     var file = this.files[0];
     var formData = new FormData();

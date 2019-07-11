@@ -27,7 +27,7 @@ $.ajax({
     type: 'get',
     url: '/comments/count',
     success: function (response) {
-        console.log(response);
+        // console.log(response);
         $('#sumComment').html(response.commentCount)
     }
 })

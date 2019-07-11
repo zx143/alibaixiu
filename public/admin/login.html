@@ -29,6 +29,8 @@
   </div>
 </body>
 <script src="../assets/vendors/jquery/jquery.min.js"></script>
+<script src="../assets/vendors/art-template/template-web.js"></script>
+<script src="../assets/js/common.js"></script>
 <script>
   //登陆按钮点击事情
   $('#loginBtn').on('click', function () {
@@ -36,29 +38,33 @@
     var email = $('#email').val();
     var password = $('#password').val();
     //判断用户输入的邮箱密码是否为空
-    if (email.trim() == ''){
+    if (email.trim() == '') {
       alert('请输入邮箱');
       return false;
     };
-    if (password == ''){
+    if (password == '') {
       alert('请输入密码');
       return false;
     };
     //不为空向服务端发送请求
     $.ajax({
-      type:'post',
-      url:'/login',
-      data:{
-        email:email,
-        password:password
+      type: 'post',
+      url: '/login',
+      data: {
+        email: email,
+        password: password
       },
-      success:function(response){
+      success: function (response) {
         //console.log(response);
-        //验证成功,跳转到index登陆成功页面
-        location.href='index.html';
+        if (response.role == 'admin') {
+          //验证成功,跳转到index登陆成功页面
+          location.href = '/admin/index.html';
+        } else {
+          location.href = '/index.html';
+        }
       },
       //验证失败
-      error:function(){
+      error: function () {
         alert('登陆失败,用户名或密码错误');
       }
     });

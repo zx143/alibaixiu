@@ -29,9 +29,9 @@
 
       </ul>
       <div class="search">
-        <form>
+        <form id="searchFrom">
           <input type="text" class="keys" placeholder="输入关键字">
-          <input type="submit" class="btn" value="搜索">
+          <input type="submit" class="btn" value="搜索" id="search">
         </form>
       </div>
     </div>
@@ -73,9 +73,9 @@
   <script src="assets/vendors/jquery/jquery.js"></script>
   <script src="assets/vendors/art-template/template-web.js"></script>
   <script src="assets/js/public.js"></script>
-  <script src="assets/js/list.js"></script>
+  <script src="assets/js/search.js"></script>
   <!-- 分类列表模板 -->
-  <script type="text/html" id="listTpl">
+  <script type="text/html" id="searchTpl">
     {{each data}}
     <div class="entry">
       <div class="head">
